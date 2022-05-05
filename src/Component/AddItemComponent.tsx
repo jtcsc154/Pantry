@@ -87,7 +87,6 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
     if (state.item !== undefined && state.item.name !== undefined) {
       setBarcode((state.item.barcode ?? generateBarcode()).toString());
       setItemName(state.item.name ?? '');
-
       if (state.item.barcode === 0 || state.item.barcode === undefined) {
         fetchBarcode(state.item.name);
       }
@@ -218,10 +217,10 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
         />
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={Style.addButton} onPress={handleFormAdd}>
-            <Text>Add</Text>
+            <Text style={Style.text}>Add</Text>
           </TouchableOpacity>
           <TouchableOpacity style={Style.clearButton} onPress={handleFormClear}>
-            <Text>Clear</Text>
+            <Text style={Style.text}>Clear</Text>
           </TouchableOpacity>
         </View>
       </View>
