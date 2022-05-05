@@ -75,6 +75,8 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
       setBarcode(barcode);
     };
 
+    console.log(barCode);
+
     if (
       state.item !== undefined &&
       state.item.barcode !== undefined &&
@@ -101,7 +103,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
     return () => {
       mountedRef.current = false;
     };
-  }, [state]);
+  }, [state, barCode]);
 
   const pantryItemFactory = (
     b: string,
@@ -146,12 +148,13 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
       ),
     );
 
-    setBarcode('');
+    setBarcode(generateBarcode().toString());
     setItemName('');
     setQuantity('');
     setPrice('');
     setExprDate('');
     setStock('');
+    setColor(randomColor());
     props.navigation.navigate('Inventory');
   };
 
@@ -163,6 +166,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
     setPrice('');
     setExprDate('');
     setStock('');
+    setColor(randomColor());
   };
 
   return (
@@ -217,7 +221,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
         />
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={Style.addButton} onPress={handleFormAdd}>
-            <Text style={Style.text}>Add</Text>
+            <Text style={Style.text}>Save</Text>
           </TouchableOpacity>
           <TouchableOpacity style={Style.clearButton} onPress={handleFormClear}>
             <Text style={Style.text}>Clear</Text>

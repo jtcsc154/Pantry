@@ -47,10 +47,13 @@ export const deletePantryItem = (item: PantryItem) => ({
 export const ApplicationReducer = (state: StateType, action: any) => {
   switch (action.type) {
     case 'ADD_PANTRY_ITEM':
-      let index = state.pantry.findIndex(o => o.barcode === action.barcode);
+      let index = state.pantry.findIndex(
+        o => o.barcode === action.item.barcode,
+      );
       if (action.item.barcode === 0) {
         index = -1;
       }
+
       if (index === -1) {
         return {
           ...state,
@@ -87,6 +90,7 @@ export const ApplicationReducer = (state: StateType, action: any) => {
     case 'DELETE_PANTRY_ITEM':
       return {
         ...state,
+        item: {},
         pantry: state.pantry.filter(function (item: PantryItem) {
           return item.barcode !== action.item.barcode;
         }),

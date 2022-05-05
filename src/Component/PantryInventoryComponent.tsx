@@ -59,7 +59,6 @@ const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
   };
 
   const onDelete = (event: any, item: PantryItem) => {
-    console.log(item);
     dispatch(deletePantryItem(item));
   };
 
