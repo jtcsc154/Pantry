@@ -4,11 +4,11 @@ import {examplePantryItems} from '../Storage/SampleItems';
 export interface StateType {
   pantry: PantryItem[];
   item: {};
-  shuffleIndex: number;
+  shuffleKey: keyof PantryItem;
 }
 
 export const ApplicationState = {
   pantry: examplePantryItems,
   item: {},
-  shuffleIndex: 0,
+  shuffleKey: 'name',
 };

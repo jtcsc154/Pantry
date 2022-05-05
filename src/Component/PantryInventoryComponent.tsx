@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,43 +6,80 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import {FlatGrid} from 'react-native-super-grid';
-import Style from './PantryInventoryStyle';
-import {useStateValue} from '../State/StateContext';
-import {editPantryItem, shufflePantry} from '../State/Reducer';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+import {FlatGrid} from 'react-native-super-grid';
+import Style from './PantryInventoryStyle';
+import {PantryItem} from '../PantryItem';
+import {useStateValue} from '../State/StateContext';
+import {editPantryItem, shufflePantry} from '../State/Reducer';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
+//@ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
+const makeButton = (name: string) => (
+  <MaterialCommunityIcons name={name} size={26} />
+);
+
 const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
   // @ts-ignore
-  const [{pantry}, dispatch] = useStateValue();
+  const [{pantry, shuffleKey}, dispatch] = useStateValue();
+  const [button, setButton] = useState('sort-alphabetical-ascending');
+
+  const onLongPress = (item: PantryItem) => {
+    const url =
+      'https://www.harristeeter.com/search?' +
+      new URLSearchParams({
+        query: item.name,
+        searchType: 'default_search',
+      });
+
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
+
+  const onShortPress = (item: PantryItem) => {
+    dispatch(editPantryItem(item.barcode));
+    props.navigation.navigate('Add');
+  };
 
   React.useLayoutEffect(() => {
+    const shuffleMode = {
+      name: 'sort-alphabetical-ascending',
+      quantity: 'sort-numeric-ascending',
+      lowStock: 'sort-numeric-descending-variant',
+      expirationDate: 'sort-calendar-ascending',
+    };
+
+    // @ts-ignore
     props.navigation.setOptions({
       headerRight: () => (
         <SafeAreaView>
           <TouchableOpacity
             style={{right: 20}}
-            onPress={() => dispatch(shufflePantry())}>
-            <MaterialCommunityIcons
-              name="shuffle-variant"
-              color="black"
-              size={26}
-            />
+            onPress={() => {
+              dispatch(shufflePantry());
+              setButton(shuffleMode[shuffleKey]);
+            }}>
+            <MaterialCommunityIcons name={button} color="black" size={26} />
           </TouchableOpacity>
         </SafeAreaView>
       ),
     });
-  }, [dispatch, props]);
+  }, [dispatch, shuffleKey, props, button]);
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -52,27 +89,10 @@ const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
           data={pantry}
           style={Style.gridView}
           spacing={10}
-          renderItem={({item}) => (
+          renderItem={({item}: {item: PantryItem}) => (
             <TouchableHighlight
-              onPress={() => {
-                dispatch(editPantryItem(item.barcode));
-                props.navigation.navigate('Add');
-              }}
-              onLongPress={() => {
-                const url =
-                  'https://www.harristeeter.com/search?' +
-                  new URLSearchParams({
-                    query: item.name,
-                    searchType: 'default_search',
-                  });
-                Linking.canOpenURL(url).then(supported => {
-                  if (supported) {
-                    Linking.openURL(url);
-                  } else {
-                    console.log("Don't know how to open URI: " + url);
-                  }
-                });
-              }}
+              onPress={() => onShortPress(item)}
+              onLongPress={() => onLongPress(item)}
               underlayColor="white">
               <View
                 style={[

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {FloatingLabelInput} from 'react-native-floating-label-input';
 import Style from './AddItemStyle';
 import {useStateValue} from '../State/StateContext';
@@ -32,6 +32,10 @@ const colors = [
 
 function random() {
   return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function generateBarcode() {
+  return Math.floor(100000000000000 + Math.random() * 9000000000000000);
 }
 
 const AddItemComponent: React.FC<Props> = (props: Props) => {
@@ -72,16 +76,16 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
     };
 
     if (
-      (state.item !== undefined && state.item.barcode !== undefined) ||
-      (state.item !== undefined &&
-        (state.item.name === null || state.item.name === ''))
+      state.item !== undefined &&
+      state.item.barcode !== undefined &&
+      state.item.name === undefined
     ) {
       fetchName(state.item.barcode);
       setBarcode(state.item.barcode);
     }
 
     if (state.item !== undefined && state.item.name !== undefined) {
-      setBarcode((state.item.barcode ?? '').toString());
+      setBarcode((state.item.barcode ?? generateBarcode()).toString());
       setItemName(state.item.name ?? '');
 
       if (state.item.barcode === 0 || state.item.barcode === undefined) {
@@ -119,7 +123,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
       color: c,
     } as PantryItem);
 
-  const handleFormSubmission = () => {
+  const handleFormAdd = () => {
     if (
       itemName === '' ||
       quantity === '' ||
@@ -149,7 +153,16 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
     setPrice('');
     setExprDate('');
     setStock('');
-    props.navigation.navigate('Inventory', {});
+    props.navigation.navigate('Inventory');
+  };
+
+  const handleFormClear = () => {
+    setBarcode(generateBarcode().toString());
+    setItemName('');
+    setQuantity('');
+    setPrice('');
+    setExprDate('');
+    setStock('');
   };
 
   return (
@@ -202,7 +215,14 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
           onChangeText={setStock}
           containerStyles={Style.space}
         />
-        <Button title={'Save'} onPress={handleFormSubmission} />
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity style={Style.addButton} onPress={handleFormAdd}>
+            <Text>Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={Style.clearButton} onPress={handleFormClear}>
+            <Text>Clear</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

@@ -1,6 +1,21 @@
 import {StateType} from './DefaultState';
 import {PantryItem} from '../PantryItem';
 
+const nextKey = (currentKey: keyof PantryItem): keyof PantryItem => {
+  switch (currentKey) {
+    case 'name':
+      return 'quantity';
+    case 'quantity':
+      return 'lowStock';
+    case 'lowStock':
+      return 'expirationDate';
+    case 'expirationDate':
+      return 'name';
+    default:
+      return currentKey;
+  }
+};
+
 export const addPantryItem = (item: PantryItem) => ({
   type: 'ADD_PANTRY_ITEM',
   item,
@@ -11,7 +26,7 @@ export const scannedBarcode = (barcode: string) => ({
   barcode,
 });
 
-export const editPantryItem = (barcode: string) => ({
+export const editPantryItem = (barcode: number) => ({
   type: 'EDIT_PANTRY_ITEM',
   barcode,
 });
@@ -55,12 +70,9 @@ export const ApplicationReducer = (state: StateType, action: any) => {
       return {
         ...state,
         pantry: state.pantry.sort((a, b) =>
-          Object.values(a)[state.shuffleIndex] >
-          Object.values(b)[state.shuffleIndex]
-            ? 1
-            : -1,
+          a[state.shuffleKey] > b[state.shuffleKey] ? 1 : -1,
         ),
-        shuffleIndex: (state.shuffleIndex + 1) % 7,
+        shuffleKey: nextKey(state.shuffleKey),
         item: {},
       };
     default:

@@ -11,6 +11,19 @@ const Style: NamedStyles<any> = StyleSheet.create({
     borderColor: '#024a54',
     marginBottom: 10,
   },
+
+  addButton: {
+    padding: 8,
+    margin: 8,
+    backgroundColor: '#23A3E9C3',
+    borderRadius: 5,
+  },
+  clearButton: {
+    padding: 8,
+    margin: 8,
+    backgroundColor: '#f33737',
+    borderRadius: 5,
+  },
 });
 
 export default Style;
