@@ -46,7 +46,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
   const [barCode, setBarcode] = useState(generateBarcode().toString());
   const [itemName, setItemName] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState('$');
+  const [price, setPrice] = useState('');
   const [exprDate, setExprDate] = useState('');
   const [stock, setStock] = useState('');
 
