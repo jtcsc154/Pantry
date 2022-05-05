@@ -43,7 +43,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
   const [state, dispatch] = useStateValue();
 
   // @ts-ignore
-  const [barCode, setBarcode] = useState(generateBarcode());
+  const [barCode, setBarcode] = useState(generateBarcode().toString());
   const [itemName, setItemName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('$');
