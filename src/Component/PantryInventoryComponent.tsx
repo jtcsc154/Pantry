@@ -20,6 +20,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 //@ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -91,11 +92,15 @@ const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
               onLongPress={() => onLongPress(item)}
               underlayColor="white">
               <View
-                style={[
-                  Style.itemContainer,
-                  {backgroundColor: item.color},
-                  item.quantity <= item.lowStock ? Style.lowStockBoarder : [],
-                ]}>
+                style={[Style.itemContainer, {backgroundColor: item.color}]}>
+                {item.quantity <= item.lowStock && (
+                  <EvilIcons
+                    style={Style.lowQuantity}
+                    name="exclamation"
+                    color="red"
+                    size={24}
+                  />
+                )}
                 <Text style={Style.itemName}>{item.name}</Text>
                 <Text style={Style.itemQuantity}>{item.quantity}</Text>
               </View>

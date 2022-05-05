@@ -37,8 +37,13 @@ const Style: NamedStyles<any> = StyleSheet.create({
   lowStockBoarder: {
     borderStyle: 'solid',
     borderRadius: 5,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'red',
+  },
+  lowQuantity: {
+    position: 'absolute',
+    top: 4,
+    left: 4,
   },
 });
 
