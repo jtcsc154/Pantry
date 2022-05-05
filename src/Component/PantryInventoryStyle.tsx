@@ -14,7 +14,7 @@ const Style: NamedStyles<any> = StyleSheet.create({
     height: 100,
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
     fontWeight: '600',
   },
@@ -43,7 +43,12 @@ const Style: NamedStyles<any> = StyleSheet.create({
   lowQuantity: {
     position: 'absolute',
     top: 4,
-    left: 4,
+    right: 4,
+  },
+  trashCan: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
   },
 });
 

@@ -39,6 +39,11 @@ export const clearPantryItem = () => ({
   type: 'CLEAR_PANTRY_ITEM',
 });
 
+export const deletePantryItem = (item: PantryItem) => ({
+  type: 'DELETE_PANTRY_ITEM',
+  item,
+});
+
 export const ApplicationReducer = (state: StateType, action: any) => {
   switch (action.type) {
     case 'ADD_PANTRY_ITEM':
@@ -78,6 +83,13 @@ export const ApplicationReducer = (state: StateType, action: any) => {
         ),
         shuffleKey: nextKey(state.shuffleKey),
         item: {},
+      };
+    case 'DELETE_PANTRY_ITEM':
+      return {
+        ...state,
+        pantry: state.pantry.filter(function (item: PantryItem) {
+          return item.barcode !== action.item.barcode;
+        }),
       };
     case 'CLEAR_PANTRY_ITEM':
       return {
