@@ -25,10 +25,6 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-const makeButton = (name: string) => (
-  <MaterialCommunityIcons name={name} size={26} />
-);
-
 const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
   // @ts-ignore
   const [{pantry, shuffleKey}, dispatch] = useStateValue();

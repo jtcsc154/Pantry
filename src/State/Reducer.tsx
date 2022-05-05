@@ -35,6 +35,10 @@ export const shufflePantry = () => ({
   type: 'SHUFFLE_PANTRY_ITEMS',
 });
 
+export const clearPantryItem = () => ({
+  type: 'CLEAR_PANTRY_ITEM',
+});
+
 export const ApplicationReducer = (state: StateType, action: any) => {
   switch (action.type) {
     case 'ADD_PANTRY_ITEM':
@@ -73,6 +77,11 @@ export const ApplicationReducer = (state: StateType, action: any) => {
           a[state.shuffleKey] > b[state.shuffleKey] ? 1 : -1,
         ),
         shuffleKey: nextKey(state.shuffleKey),
+        item: {},
+      };
+    case 'CLEAR_PANTRY_ITEM':
+      return {
+        ...state,
         item: {},
       };
     default:

@@ -4,7 +4,7 @@ import {FloatingLabelInput} from 'react-native-floating-label-input';
 import Style from './AddItemStyle';
 import {useStateValue} from '../State/StateContext';
 import {PantryItem} from '../PantryItem';
-import {addPantryItem} from '../State/Reducer';
+import {addPantryItem, clearPantryItem} from '../State/Reducer';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -157,6 +157,7 @@ const AddItemComponent: React.FC<Props> = (props: Props) => {
   };
 
   const handleFormClear = () => {
+    dispatch(clearPantryItem());
     setBarcode(generateBarcode().toString());
     setItemName('');
     setQuantity('');
