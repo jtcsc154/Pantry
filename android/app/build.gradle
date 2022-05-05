@@ -85,11 +85,6 @@ project.ext.react = [
 ]
 
 
-project.ext.vectoricons = [
-    iconFontNames: ['MaterialIcons.ttf', 'MaterialCommunityIcons.ttf']
-]
-
-
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
