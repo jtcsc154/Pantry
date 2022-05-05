@@ -14,7 +14,8 @@ const Style: NamedStyles<any> = StyleSheet.create({
     height: 100,
   },
   itemName: {
-    fontSize: 18,
+    fontSize: 20,
+    marginBottom: 10,
     color: '#fff',
     fontWeight: '600',
   },

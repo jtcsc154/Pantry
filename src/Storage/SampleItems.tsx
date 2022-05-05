@@ -85,7 +85,7 @@ export const examplePantryItems: PantryItem[] = [
   },
   {
     barcode: 10,
-    name: 'Chicken thighs',
+    name: 'Chicken Thighs',
     price: '$7.99',
     expirationDate: '5/31/2022',
     lowStock: 2,

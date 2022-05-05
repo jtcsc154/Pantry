@@ -4,7 +4,8 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
-  Linking, NativeTouchEvent,
+  Linking,
+  NativeTouchEvent,
 } from 'react-native';
 import {
   NavigationParams,
@@ -15,7 +16,11 @@ import {FlatGrid} from 'react-native-super-grid';
 import Style from './PantryInventoryStyle';
 import {PantryItem} from '../PantryItem';
 import {useStateValue} from '../State/StateContext';
-import {deletePantryItem, editPantryItem, shufflePantry} from '../State/Reducer';
+import {
+  deletePantryItem,
+  editPantryItem,
+  shufflePantry,
+} from '../State/Reducer';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 //@ts-ignore
@@ -54,6 +59,7 @@ const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
   };
 
   const onDelete = (event: any, item: PantryItem) => {
+    console.log(item);
     dispatch(deletePantryItem(item));
   };
 
@@ -107,7 +113,9 @@ const PantryInventoryComponent: React.FC<Props> = (props: Props) => {
                 )}
                 <Text style={Style.itemName}>{item.name}</Text>
                 <Text style={Style.itemQuantity}>{item.quantity}</Text>
-                <TouchableOpacity style={Style.trashCan} onPress={event => onDelete(event, item)}>
+                <TouchableOpacity
+                  style={Style.trashCan}
+                  onPress={event => onDelete(event, item)}>
                   <MaterialCommunityIcons
                     name="trash-can-outline"
                     color="white"

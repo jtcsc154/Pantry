@@ -30,27 +30,27 @@ const colors = [
   '#1A5E63',
 ];
 
-function random() {
-  return colors[Math.floor(Math.random() * colors.length)];
-}
-
 function generateBarcode() {
   return Math.floor(100000000000000 + Math.random() * 9000000000000000);
 }
+
+const randomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
 
 const AddItemComponent: React.FC<Props> = (props: Props) => {
   // @ts-ignore
   const [state, dispatch] = useStateValue();
 
   // @ts-ignore
-  const [barCode, setBarcode] = useState('');
+  const [barCode, setBarcode] = useState(generateBarcode());
   const [itemName, setItemName] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState('$');
   const [exprDate, setExprDate] = useState('');
   const [stock, setStock] = useState('');
 
-  const [color, setColor] = useState(random());
+  const [color, setColor] = useState(randomColor());
   const mountedRef = useRef(true);
 
   useEffect(() => {
